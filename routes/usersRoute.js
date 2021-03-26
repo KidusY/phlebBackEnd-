@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 
 
-    res.send();
+
 })
 
 router.post('/', (req, res) => {

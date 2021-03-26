@@ -14,44 +14,44 @@ router.get('/', async (req, res) => {
     }
 
 
-    res.send("Welcome");
+    
 })
 
-router.post('/',  (req, res) => {
+router.post('/', async(req, res) => {
     const { name, email, address, SSN, phoneNumber, emergencyContact, profileImage } = req.body
-    const { streetAddress, state, zipCode, country} = address;
+    const { streetAddress, state, zipCode, country } = address;
     let student;
     //creates a students 
-    CommonServices.hashPassword(password).then( async(hashedPassword) => {
-        student = new Users({
-            name,
-            email,
-            SSN,
-            phoneNumber,
-            emergencyContact,
-            streetAddress,
-            state,
-            zipCode,
-            country,
-            dateOfSubmission: new Date().toDateString(),
-            profileImage,
-
-        })
-
-        try {
-            const newStudent = await student.save();
-            res.json(newStudent)
-        }
-        catch (err) {
-            res.json(err)
-        }
-
+    
+    student = new Students({
+        name,
+        email,
+        SSN,
+        phoneNumber,
+        emergencyContact,
+        streetAddress,
+        state,
+        zipCode,
+        country,
+        dateOfSubmission: new Date().toDateString(),
+        profileImage,
 
     })
 
+    try {
+        const newStudent = await student.save();
+        res.json(newStudent)
+    }
+    catch (err) {
+        res.json(err)
+    }
 
 
-    
+
+
+
+
+
 
 
 

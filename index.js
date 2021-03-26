@@ -6,8 +6,8 @@ const express = require('express');
 
 const app = express();
 
-const UsersRoute = require('./routes/usersRoute')
-
+const UsersRoute = require('./routes/usersRoute');
+const StudentsRoute = require('./routes/studentsRoute');
 
 
 const mongoose = require('mongoose');
@@ -25,5 +25,6 @@ app.use(express.json());
 
 
 app.use('/users', UsersRoute);
+app.use('/students', StudentsRoute);
 
 app.listen(process.env.PORT || 8000)
