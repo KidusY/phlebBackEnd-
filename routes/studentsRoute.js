@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     }
 
 
-    res.send();
+    res.send("Welcome");
 })
 
 router.post('/',  (req, res) => {
@@ -26,7 +26,7 @@ router.post('/',  (req, res) => {
         student = new Users({
             name,
             email,
-            SNN,
+            SSN,
             phoneNumber,
             emergencyContact,
             streetAddress,
