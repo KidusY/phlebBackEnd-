@@ -20,7 +20,12 @@ router.post('/',async(req,res)=>{
                      })
                  }
                 
-            res.status(201).json( CommonServices.createJwt(users[0].email,{user_id:users[0]._id}))
+            res.status(201).json( {
+             token:CommonServices.createJwt(users[0].email,{user_id:users[0]._id}),
+                email: users[0].email,
+                name: users[0].name
+            
+            })
 
              })
              .catch(err=>console.log(err))
