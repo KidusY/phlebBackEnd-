@@ -30,7 +30,7 @@ router.post('/',async(req,res)=>{
             
         }
         else{
-            res.status(401).json("Incorrect User name or password")
+            res.status(401).json({errorMessage:"Incorrect User name or password"})
         }
         
     }
