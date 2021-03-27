@@ -8,20 +8,32 @@ router.get('/', async (req, res) => {
         const users = await Users.find({});
 
 
-        
+
         res.json(users)
     }
     catch (err) {
-        res.json(err)
+        res.status(500).json(err);
     }
 
 
 
 })
 
-router.post('/', (req, res) => {
+router.post('/', async(req, res) => {
     const { name, email, password, profileImage } = req.body
     let user;
+
+    try{
+        const user = await Users.find({email:email});
+        if(user.length > 0){
+            res.status(409).json({errorMessage:"Email already Exists"})
+        }
+    }
+    catch(err){
+      //  res.status(500).json(err);
+    }
+
+
     //creates a user 
     CommonServices.hashPassword(password).then(async (hashedPassword) => {
         user = new Users({
