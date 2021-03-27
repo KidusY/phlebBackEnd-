@@ -6,6 +6,9 @@ router.get('/', async (req, res) => {
 
     try {
         const users = await Users.find({});
+
+
+        
         res.json(users)
     }
     catch (err) {
