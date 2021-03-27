@@ -8,7 +8,7 @@ router.post('/',async(req,res)=>{
 
     try {
         const users = await Users.find({"email":email});
-        console.log(users);
+       
         if(users.length > 0){
             console.log(password, users.password);
              CommonServices.comparePasswords(password,users[0].password)
@@ -30,7 +30,7 @@ router.post('/',async(req,res)=>{
             
         }
         else{
-            res.json("user not found")
+            res.status(401).json("Incorrect User name or password")
         }
         
     }
