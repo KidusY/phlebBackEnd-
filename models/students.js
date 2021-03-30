@@ -27,6 +27,9 @@ const StudentSchema = new mongoose.Schema({
         type:[],
 
     },
+    course:{
+        type:[]
+    },
 
     streetAddress: {
         type: String,
@@ -41,7 +44,7 @@ const StudentSchema = new mongoose.Schema({
         required: true
     }
     ,
-    country: {
+    city: {
         type: String,
         required: true
     },

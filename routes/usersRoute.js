@@ -6,9 +6,6 @@ router.get('/', async (req, res) => {
 
     try {
         const users = await Users.find({});
-
-
-
         res.json(users)
     }
     catch (err) {
@@ -48,7 +45,7 @@ router.post('/', async(req, res) => {
             res.json(newUser)
         }
         catch (err) {
-            res.json(err)
+            res.status(500).json(err)
         }
 
 
