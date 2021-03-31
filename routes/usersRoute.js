@@ -45,7 +45,7 @@ router.post('/', async(req, res) => {
             name: name,
             email: email,
             password: hashedPassword,
-            accountType
+            accountType,
             profileImage: profileImage
         })
 
