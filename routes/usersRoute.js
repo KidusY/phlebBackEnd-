@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async(req, res) => {
-    const { name, email, password, profileImage } = req.body
+    const { name, email, password,accountType, profileImage } = req.body
     let user;
     for (const field of ['name', 'email', 'password']) {
         if (!req.body[field])
@@ -45,6 +45,7 @@ router.post('/', async(req, res) => {
             name: name,
             email: email,
             password: hashedPassword,
+            accountType
             profileImage: profileImage
         })
 
