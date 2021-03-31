@@ -19,6 +19,14 @@ router.get('/', async (req, res) => {
 router.post('/', async(req, res) => {
     const { name, email, password, profileImage } = req.body
     let user;
+    for (const field of ['name', 'email', 'password']) {
+        if (!req.body[field])
+            return res.status(400).json({
+                error: `Missing '${field}' in request body`
+            });
+
+    }
+
 
     try{
         const user = await Users.find({email:email});

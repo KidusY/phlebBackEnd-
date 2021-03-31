@@ -10,11 +10,10 @@ const usersSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        lowercase: true,
-        unique: true, 
-        required: [true, "can't be blank"],
-        match: [/\S+@\S+\.\S+/, 'is invalid'],
-        index: true
+        required:true
+  
+     
+        
     },
     password: {
         type: String,
@@ -23,6 +22,10 @@ const usersSchema = new mongoose.Schema({
     isAdmin:{
         type:Boolean,
         
+    },
+    accountType:{
+        type:String,
+        required:true
     },
     profileImage: {
         type: String,

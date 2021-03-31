@@ -1,24 +1,21 @@
 const mongoose = require('mongoose');
 
-const StudentSchema = new mongoose.Schema({
+const StudentDataSchema = new mongoose.Schema({
     studentId: {
         type: String,
         
     },
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        lowercase: true,
-        unique: true,
-        required: [true, "can't be blank"],
-        match: [/\S+@\S+\.\S+/, 'is invalid'],
-        index: true
-    },
+    userId:{
+        type:String,
+       // require:true
+    }, 
+    email:{
+        type:String
+    }  ,
+   
     SSN:{
         type: String,
+       
     },
     phoneNumber:{
         type: String,
@@ -33,31 +30,31 @@ const StudentSchema = new mongoose.Schema({
 
     streetAddress: {
         type: String,
-        required: true
+       // required: true
     },
     state: {
         type: String,
-        required: true
+       // required: true
     },
     zipCode: {
         type: String,
-        required: true
+        //required: true
     }
     ,
     city: {
         type: String,
-        required: true
+        //required: true
     },
     profileImage: {
         type: String,
-        required: false
+       // required: false
 
     },
     dateOfSubmission:{
         type: String,
-        required: false
+        //required: true
     }
 
 })
 
-module.exports = mongoose.model('StudentSchema', StudentSchema)
+module.exports = mongoose.model('StudentSchema', StudentDataSchema)
