@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async(req, res) => {
     const { name, email, address, SSN, phoneNumber, emergencyContact, profileImage } = req.body
-    const { streetAddress, state, zipCode, country } = address;
+    const { streetAddress, state, zipCode, city } = address;
     let student;
     //creates a students 
     
@@ -32,7 +32,7 @@ router.post('/', async(req, res) => {
         streetAddress,
         state,
         zipCode,
-        country,
+        city,
         dateOfSubmission: new Date().toDateString(),
         profileImage,
 
