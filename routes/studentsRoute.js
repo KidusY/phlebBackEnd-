@@ -4,6 +4,9 @@ const StudentDataSchema = require('../models/students');
 const Users = require('../models/users')
 const CommonServices = require('../services/commonServices');
 
+const sendMail = require('../nodeMailer/nodMailer')
+
+
 router.get('/', async (req, res) => {
 
     try {
@@ -17,11 +20,18 @@ router.get('/', async (req, res) => {
 
 
 })
+router.get('/sendmail', async (req, res) => {
+
+   sendMail('kidusyilma@gmail.com').then(res=>console.log('email sent')).catch(err=>err.message)
+
+
+
+})
 
 router.post('/', async (req, res) => {
     const { name, email, password, address, SSN, phoneNumber, emergencyContact, profileImage, accountType } = req.body
     const { streetAddress, state, zipCode, city } = address;
-    let student;
+   
     //creates a students 
 
     for (const field of ['name', 'email', 'password', 'phoneNumber']) {
@@ -73,6 +83,11 @@ router.post('/', async (req, res) => {
 
             try {
                 const newStudent = await student.save();
+
+
+
+                sendMail(email).then((res)=> console.log(res)).catch(err=>console.log(err) )
+               
                 res.json(newStudent)
             }
             catch (err) {
@@ -88,16 +103,30 @@ router.post('/', async (req, res) => {
     })
 
 
+})
 
 
+router.patch('/address/:id',async(req, res)=>{
+    const {  address } = req.body 
+
+    const id = req.params.id;
+   console.log(id)
+
+    try {
+        const Student = await StudentDataSchema.find({ _id: id });
+        
+        if (Student.length === 0) {
+            res.status(404).json({ errorMessage: "Student Does Not Exist" })
+        }
+       
+
+        StudentDataSchema.updateOne({ _id: id }, { $set: address}).then(()=>res.json("update completed"));
 
 
-
-
-
-
-
-
+    }
+    catch (err) {
+        res.status(500).json(err);
+    }
 
 
 
