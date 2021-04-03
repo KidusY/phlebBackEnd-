@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 })
 router.get('/sendmail', async (req, res) => {
 
-   sendMail('kidusyilma@gmail.com').then(res=>console.log('email sent')).catch(err=>err.message)
+   sendMail('kidusyilma@gmail.com').then((confirmation)=>res.json(confirmation)).catch(err=>err.message)
 
 
 
@@ -86,9 +86,15 @@ router.post('/', async (req, res) => {
 
 
 
-                sendMail(email).then((res)=> console.log(res)).catch(err=>console.log(err) )
+                sendMail(email).then((emailConf)=> {
+                    if (!emailConf.accepted){
+                        res.status(404).json("Oops something went wrong. Please Check Email address")
+                    }
+                    res.json(newStudent);
+                
+                }).catch(err=>res.status(500).json(err) )
                
-                res.json(newStudent)
+                
             }
             catch (err) {
                 res.status(500).json(err)
@@ -96,7 +102,7 @@ router.post('/', async (req, res) => {
 
         }
         catch (err) {
-            res.json("error while creating a user")
+            res.status(500).json("Error while creating a User")
         }
 
 
