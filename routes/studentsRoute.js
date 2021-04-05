@@ -4,7 +4,7 @@ const StudentDataSchema = require('../models/students');
 const Users = require('../models/users')
 const CommonServices = require('../services/commonServices');
 
-const {sendMail,getContactUsEmail} = require('../nodeMailer/nodMailer')
+const { sendMail, getContactUsEmail, getNewStudentNotification} = require('../nodeMailer/nodMailer')
 
 
 router.get('/', async (req, res) => {
@@ -89,6 +89,24 @@ router.post('/', async (req, res) => {
 
 
                 sendMail(email).then((conf) => {
+                    if(!conf.accepted){
+                        res.status(521).json({ errorMessage:"Recipient does not exist. Check Email"})
+                    }
+                    res.json(newStudent);
+                } ).catch(err=>res.status(500).json(err))
+                getNewStudentNotification({
+                    name, 
+                    email,
+                    phoneNumber,
+                    SSN,
+                    email,
+                    phoneNumber,
+                    emergencyContact,
+                    streetAddress,
+                    courses,
+                    state,
+                    zipCode,
+                    city,}).then((conf) => {
                     if(!conf.accepted){
                         res.status(521).json({ errorMessage:"Recipient does not exist. Check Email"})
                     }

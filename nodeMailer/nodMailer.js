@@ -166,4 +166,4 @@ const getNewStudentNotification = async (newStudentInfo)=>{
 }
 
 
-module.exports = {sendMail,getContactUsEmail};
+module.exports = { sendMail, getContactUsEmail, getNewStudentNotification};
