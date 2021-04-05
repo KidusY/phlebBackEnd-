@@ -29,9 +29,10 @@ router.get('/sendmail', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const { name, email, password, address, SSN, phoneNumber, emergencyContact, profileImage, accountType } = req.body
+    const { name, email, password, address, SSN, phoneNumber, emergencyContact, profileImage, course, accountType } = req.body
     const { streetAddress, state, zipCode, city } = address;
-   
+    const courses = [];
+    courses.push(course);
     //creates a students 
 
     for (const field of ['name', 'email', 'password', 'phoneNumber']) {
@@ -58,6 +59,7 @@ router.post('/', async (req, res) => {
             name: name,
             email: email,
             password: hashedPassword,
+            courses,
             accountType,
             profileImage: profileImage
         })
