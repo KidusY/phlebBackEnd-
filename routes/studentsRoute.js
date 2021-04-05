@@ -58,8 +58,7 @@ router.post('/', async (req, res) => {
         let user = new Users({
             name: name,
             email: email,
-            password: hashedPassword,
-            courses,
+            password: hashedPassword,            
             accountType,
             profileImage: profileImage
         })
@@ -75,6 +74,7 @@ router.post('/', async (req, res) => {
                 phoneNumber,
                 emergencyContact,
                 streetAddress,
+                courses,
                 state,
                 zipCode,
                 city,
