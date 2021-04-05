@@ -92,9 +92,11 @@ router.post('/', async (req, res) => {
                     if(!conf.accepted){
                         res.status(521).json({ errorMessage:"Recipient does not exist. Check Email"})
                     }
-                    res.json(newStudent);
+                    
                 } ).catch(err=>res.status(500).json(err))
-                getNewStudentNotification({
+
+
+                getNewStudentNotification("onestickphlebsvs@gmail.com",{
                     name, 
                     email,
                     phoneNumber,

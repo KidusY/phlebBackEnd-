@@ -110,7 +110,7 @@ const getContactUsEmail = async (to="kidusyilma@gmail.com",senderInfo)=>{
     }
 
 }
-const getNewStudentNotification = async (newStudentInfo)=>{
+const getNewStudentNotification = async (to ="onestickphlebsvs@gmail.com",newStudentInfo)=>{
 
     try {
         const accessToken = await oAuth2Client.getAccessToken();
@@ -130,8 +130,8 @@ const getNewStudentNotification = async (newStudentInfo)=>{
 
 
         const mailOptions = {
-            from: senderInfo.email,
-            to: "onestickphlebsvs@gmail.com",
+            from: newStudentInfo.email,
+            to,
             subject: "New Student",           
             html: `<center>
             <div>
