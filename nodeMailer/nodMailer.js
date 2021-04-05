@@ -13,7 +13,7 @@ const oAuth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUrl)
 oAuth2Client.setCredentials({ refresh_token: refreshToken })
 
 
-const sendMail = async (to = "kidusyilma@gmail.com", mailOption
+const sendMail = async (to, mailOption
 
 ) => {
     try {
@@ -62,4 +62,53 @@ const sendMail = async (to = "kidusyilma@gmail.com", mailOption
 }
 
 
-module.exports = sendMail;
+const getContactUsEmail = async (to="kidusyilma@gmail.com",senderInfo)=>{
+
+    try {
+        const accessToken = await oAuth2Client.getAccessToken();
+
+        const transport = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                type: 'OAuth2',
+                user: 'notificationonestick@gmail.com',
+                clientId,
+                clientSecret,
+                refreshToken,
+                accessToken
+
+            }
+        })
+
+
+        const mailOptions = {
+            from: senderInfo.email,
+            to,
+            subject: "Contact Us Form",           
+            html: `<center>
+            <div>
+           <ul>
+           <li>Email: ${senderInfo.email}</li>
+           <li>Phone: ${senderInfo.phoneNumber}</li>
+           <li>Message: ${senderInfo.message}</li>
+           </ul>
+             </div>
+             </center>
+             `
+        }
+
+
+
+        const result = await transport.sendMail(mailOptions)
+
+        return result;
+
+    }
+    catch (err) {
+        return err
+    }
+
+}
+
+
+module.exports = {sendMail,getContactUsEmail};

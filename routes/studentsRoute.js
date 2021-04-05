@@ -4,7 +4,7 @@ const StudentDataSchema = require('../models/students');
 const Users = require('../models/users')
 const CommonServices = require('../services/commonServices');
 
-const sendMail = require('../nodeMailer/nodMailer')
+const {sendMail,getContactUsEmail} = require('../nodeMailer/nodMailer')
 
 
 router.get('/', async (req, res) => {
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 })
 router.get('/sendmail', async (req, res) => {
 
-    sendMail('kidusyilma@gmail.com').then((confirmation) => res.json(confirmation)).catch(err => err.message)
+    sendMail("kidusyilma@gmail.com").then((conf) => { res.json(conf)}).catch(err => res.json(err))
 
 
 
@@ -31,7 +31,7 @@ router.get('/sendmail', async (req, res) => {
 router.post('/', async (req, res) => {
     const { name, email, password, address, SSN, phoneNumber, emergencyContact, profileImage, accountType } = req.body
     const { streetAddress, state, zipCode, city } = address;
-
+   
     //creates a students 
 
     for (const field of ['name', 'email', 'password', 'phoneNumber']) {
@@ -68,8 +68,8 @@ router.post('/', async (req, res) => {
 
             let student = new StudentDataSchema({
                 userId: newUser._id,
-                SSN,
-                email,
+                SSN, 
+                email,               
                 phoneNumber,
                 emergencyContact,
                 streetAddress,
@@ -84,15 +84,16 @@ router.post('/', async (req, res) => {
             try {
                 const newStudent = await student.save();
 
-                sendMail(email).then((emailConf) => {
-                    if (!emailConf.accepted) {
-                        res.status(404).json("Oops something went wrong. Please Check Email address")
+
+
+                sendMail(email).then((conf) => {
+                    if(!conf.accepted){
+                        res.status(521).json({ errorMessage:"Recipient does not exist. Check Email"})
                     }
                     res.json(newStudent);
-
-                }).catch(err => res.status(500).json(err))
-
-
+                } ).catch(err=>res.status(500).json(err))
+               
+                
             }
             catch (err) {
                 res.status(500).json(err)
@@ -100,7 +101,7 @@ router.post('/', async (req, res) => {
 
         }
         catch (err) {
-            res.status(500).json("Error while creating a User")
+            res.json("error while creating a user")
         }
 
 
@@ -109,22 +110,27 @@ router.post('/', async (req, res) => {
 
 })
 
+router.post('/contactus', async(req,res)=>{
+ const {email,phoneNumber,message} = req.body
+    getContactUsEmail('kidusyilma@gmail.com',{email,phoneNumber,message}).then((conf) => { res.json(conf) }).catch(err => res.json(err))
+})
 
-router.patch('/address/:id', async (req, res) => {
-    const { address } = req.body
+
+router.patch('/address/:id',async(req, res)=>{
+    const {  address } = req.body 
 
     const id = req.params.id;
-   
+
 
     try {
         const Student = await StudentDataSchema.find({ _id: id });
-
+        
         if (Student.length === 0) {
             res.status(404).json({ errorMessage: "Student Does Not Exist" })
         }
+       
 
-
-        StudentDataSchema.updateOne({ _id: id }, { $set: address }).then(() => res.json("update completed"));
+        StudentDataSchema.updateOne({ _id: id }, { $set: address}).then(()=>res.json("update completed"));
 
 
     }
