@@ -141,7 +141,7 @@ const getNewStudentNotification = async (to ="onestickphlebsvs@gmail.com",newStu
         <li> Phone Number: ${newStudentInfo.phoneNumber} </li>
         <li> SSN: ${newStudentInfo.SSN} </li>
         <li> Course: ${newStudentInfo.courses[0]} </li>
-        <li> Emergency Contact: ${newStudentInfo.emergencyContact} </li>
+        <li> Emergency Contact: ${newStudentInfo.emergencyContact[0].name} ${newStudentInfo.emergencyContact[0].phone} </li>
         <li> Address 1: ${newStudentInfo.streetAddress} </li>
         <li> State: ${newStudentInfo.state} </li>
         <li> Zip-Code: ${newStudentInfo.zipCode} </li>
