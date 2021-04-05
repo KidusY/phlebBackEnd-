@@ -40,10 +40,11 @@ const sendMail = async (to, mailOption
             text: "Thank you for taking the time to go through the registration process. We Will get back to you shortly",
             html: `<center>
             <div>
-            <h1> One Stick</h1>
-            <h2>Your registration is complete</h2>
-            <h3> You will here from one of our representative </h3>
-            <p> In the mean time, please go to our website and look at our values and learn more about us</p>
+            <h1>One Stick Phlebotomy Service</h1>
+            <h2>Simple as "One & Done"</h2>
+            <h3>Your registration is complete.</h3>
+            <h3> You will hear from one of our student service representatives shortly. </h3>
+            <p> Simple as "One & Done"</p>
              </div>
              </center>
              `
@@ -91,6 +92,60 @@ const getContactUsEmail = async (to="kidusyilma@gmail.com",senderInfo)=>{
            <li>Email: ${senderInfo.email}</li>
            <li>Phone: ${senderInfo.phoneNumber}</li>
            <li>Message: ${senderInfo.message}</li>
+           </ul>
+             </div>
+             </center>
+             `
+        }
+
+
+
+        const result = await transport.sendMail(mailOptions)
+
+        return result;
+
+    }
+    catch (err) {
+        return err
+    }
+
+}
+const getNewStudentNotification = async (newStudentInfo)=>{
+
+    try {
+        const accessToken = await oAuth2Client.getAccessToken();
+
+        const transport = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                type: 'OAuth2',
+                user: 'notificationonestick@gmail.com',
+                clientId,
+                clientSecret,
+                refreshToken,
+                accessToken
+
+            }
+        })
+
+
+        const mailOptions = {
+            from: senderInfo.email,
+            to: "onestickphlebsvs@gmail.com",
+            subject: "New Student",           
+            html: `<center>
+            <div>
+           <ul>
+        <li> Name: ${newStudentInfo.name} </li>
+        <li> Email: ${newStudentInfo.email} </li>
+        <li> Phone Number: ${newStudentInfo.phoneNumber} </li>
+        <li> SSN: ${newStudentInfo.SSN} </li>
+        <li> Course: ${newStudentInfo.courses[0]} </li>
+        <li> Emergency Contact: ${newStudentInfo.emergencyContact} </li>
+        <li> Address 1: ${newStudentInfo.streetAddress} </li>
+        <li> State: ${newStudentInfo.state} </li>
+        <li> Zip-Code: ${newStudentInfo.zipCode} </li>
+        <li> City: ${newStudentInfo.city} </li>
            </ul>
              </div>
              </center>
