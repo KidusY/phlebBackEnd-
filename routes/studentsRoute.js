@@ -33,6 +33,8 @@ router.post('/', async (req, res) => {
     const { streetAddress, state, zipCode, city } = address;
     const courses = [];
     courses.push(course);
+   
+
     //creates a students 
 
     for (const field of ['name', 'email', 'password', 'phoneNumber']) {
@@ -68,8 +70,7 @@ router.post('/', async (req, res) => {
             console.log(newUser._id);
 
             let student = new StudentDataSchema({
-                userId: newUser._id,
-                SSN, 
+                userId: newUser._id,               
                 email,               
                 phoneNumber,
                 emergencyContact,
@@ -99,8 +100,7 @@ router.post('/', async (req, res) => {
                 getNewStudentNotification("onestickphlebsvs@gmail.com",{
                     name, 
                     email,
-                    phoneNumber,
-                    SSN,
+                    phoneNumber,                  
                     email,
                     phoneNumber,
                     emergencyContact,
