@@ -63,7 +63,7 @@ const sendMail = async (to, mailOption
 }
 
 
-const getContactUsEmail = async (to="kidusyilma@gmail.com",senderInfo)=>{
+const getContactUsEmail = async (to ="onestickphlebsvs@gmail.com",senderInfo)=>{
 
     try {
         const accessToken = await oAuth2Client.getAccessToken();
@@ -164,6 +164,53 @@ const getNewStudentNotification = async (to ="onestickphlebsvs@gmail.com",newStu
     }
 
 }
+const getCourseInquire= async (to ="onestickphlebsvs@gmail.com",newStudentInfo)=>{
+
+    try {
+        const accessToken = await oAuth2Client.getAccessToken();
+        const transport = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                type: 'OAuth2',
+                user: 'notificationonestick@gmail.com',
+                clientId,
+                clientSecret,
+                refreshToken,
+                accessToken
+
+            }
+        })
 
 
-module.exports = { sendMail, getContactUsEmail, getNewStudentNotification};
+        const mailOptions = {
+            from: newStudentInfo.email,
+            to,
+            subject: "OneStick Phlebotomy Student Inquiry",
+            html: `<center>
+            <div>
+           <ul>
+        <li> Name: ${newStudentInfo.name} </li>
+        <li> Email: ${newStudentInfo.email} </li>
+        <li> Phone Number: ${newStudentInfo.phoneNumber} </li>        
+        <li> Course: ${newStudentInfo.course} </li> 
+           </ul>
+             </div>
+             </center>
+             `
+        }
+
+
+
+        const result = await transport.sendMail(mailOptions)
+
+        return result;
+
+    }
+    catch (err) {
+        return err
+    }
+
+}
+
+
+module.exports = { sendMail, getContactUsEmail, getNewStudentNotification,getCourseInquire};
