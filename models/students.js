@@ -24,7 +24,7 @@ const StudentDataSchema = new mongoose.Schema({
         type:[],
 
     },
-    course:{
+    courses:{
         type:[]
     },
 
