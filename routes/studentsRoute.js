@@ -4,7 +4,7 @@ const StudentDataSchema = require('../models/students');
 const Users = require('../models/users')
 const CommonServices = require('../services/commonServices');
 
-const { sendMail, getContactUsEmail, getNewStudentNotification, getCourseInquire } = require('../nodeMailer/nodMailer')
+const { sendMail, getContactUsEmail, getNewStudentNotification, getCourseInquire,sendEmailtoStudentAboutInfo } = require('../nodeMailer/nodMailer')
 
 
 router.get('/', async (req, res) => {
@@ -32,7 +32,16 @@ router.post('/getinfo', async (req, res) => {
     const { name, email, phoneNumber, course } = req.body;
 
     getCourseInquire("onestickphlebsvs@gmail.com", { name, email, phoneNumber, course })
-        .then((conf) => { res.json(conf) }).catch(err => res.json(err))
+        .then((conf) => { return conf })
+        .then((conf)=>{
+            sendEmailtoStudentAboutInfo(email,course).then((res)=>{
+                console.log(res);
+            }).catch(err=>console.log(err)
+                )
+
+            res.json(conf)
+        }).
+        catch(err => res.json(err))
 })
 
 router.post('/', async (req, res) => {
