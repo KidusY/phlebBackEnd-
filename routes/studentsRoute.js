@@ -77,14 +77,8 @@ router.post('/', async (req, res) => {
             console.log(newUser._id);
 
             let student = new StudentDataSchema({
-<<<<<<< HEAD
-                userId: newUser._id,
-                SSN,
-                email,
-=======
                 userId: newUser._id,               
                 email,               
->>>>>>> ef46552e536fadb246f0f0d7b72f72d5a794eff1
                 phoneNumber,
                 emergencyContact,
                 streetAddress,
