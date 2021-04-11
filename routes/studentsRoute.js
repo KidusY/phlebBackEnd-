@@ -151,7 +151,7 @@ router.post('/', async (req, res) => {
 
 router.post('/contactus', async (req, res) => {
     const { email, phoneNumber, message } = req.body
-    getContactUsEmail('kidusyilma@gmail.com', { email, phoneNumber, message }).then((conf) => { res.json(conf) }).catch(err => res.json(err))
+    getContactUsEmail('onestickphlebsvs@gmail.com', { email, phoneNumber, message }).then((conf) => { res.json(conf) }).catch(err => res.json(err))
 })
 
 
